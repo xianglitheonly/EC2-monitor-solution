@@ -11,6 +11,7 @@ main_instance_count = 1
 key_name = "mtc_key"
 
 public_key_path = "~/.ssh/id_rsa.pub"
+###
 
 # public_cidrs = ["10.124.1.0/24", "10.124.3.0/24"]
 
