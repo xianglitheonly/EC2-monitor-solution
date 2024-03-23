@@ -10,12 +10,12 @@ pipeline {
         stage('Init') {
             steps {
                 sh 'ls'
-                sh 'cd terraform && terraform init'
+                sh 'cd terraform && terraform init -no-color'
             }
         }
         stage('Plan') {
             steps {
-                sh 'terraform plan -no-color'
+                sh 'cd terraform && terraform plan -no-color'
             }
         }
         // stage('Validate Apply') {
