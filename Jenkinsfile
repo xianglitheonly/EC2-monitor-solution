@@ -20,8 +20,9 @@ pipeline {
         }
         stage('Ansible') {
             steps {
-                sh '. /ansible-core-env/bin/activate'
-                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+                sh '. /ansible-core-env/bin/activate &&\
+                    ansible-playbook --key-file /certs/client/id_rsa --user ubuntu ./ansible/main.yaml'
+                // ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
             }
         }
         // stage('Validate Apply') {
