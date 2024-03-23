@@ -20,6 +20,7 @@ pipeline {
         }
         stage('Ansible') {
             steps {
+                sh '. /ansible-core-env/bin/activate'
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
             }
         }
