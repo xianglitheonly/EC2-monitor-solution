@@ -10,8 +10,7 @@ pipeline {
         stage('Init') {
             steps {
                 sh 'ls'
-                sh 'cd terraform'
-                sh 'terraform init'
+                sh 'cd terraform && terraform init'
             }
         }
         stage('Plan') {
