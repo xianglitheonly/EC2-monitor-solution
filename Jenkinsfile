@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Ansible') {
             steps {
-                sh 'printf '\n3.27.156.237' >> ./terraform/aws_hosts '
+                sh "printf '\n3.27.156.237' >> ./terraform/aws_hosts"
                 sh '. /ansible-core-env/bin/activate && \
                     export ANSIBLE_CONFIG=./ansible/ansible.cfg
                     ansible-playbook --key-file /certs/client/id_rsa --user ubuntu ./ansible/main.yaml'
