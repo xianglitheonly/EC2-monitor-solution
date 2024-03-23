@@ -48,7 +48,7 @@ resource "aws_instance" "mtc_main" {
 resource "null_resource" "grafana_install" {
   depends_on = [aws_instance.mtc_main]
   provisioner "local-exec" {
-    command = "export ANSIBLE_CONFIG=../ansible/ansible.cfg && ansible-playbook --key-file ~/.ssh/id_rsa --user ubuntu ../ansible/main.yaml"
+    command = "export ANSIBLE_CONFIG=../ansible/ansible.cfg && ansible-playbook --key-file /certs/client/id_rsa.pub --user ubuntu ../ansible/main.yaml"
   }
 }
 
