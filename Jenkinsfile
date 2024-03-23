@@ -18,6 +18,11 @@ pipeline {
                 sh 'cd terraform && terraform plan -no-color'
             }
         }
+        stage('Ansible') {
+            steps {
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+            }
+        }
         // stage('Validate Apply') {
         //     input {
         //         message "Do you want to Apply this plan?"
