@@ -10,15 +10,15 @@ pipeline {
         stage('Init') {
             steps {
                 sh 'ls'
-                sh 'aws s3 ls'
+                sh 'cd terraform'
                 sh 'terraform init'
             }
         }
-        // stage('Plan') {
-        //     steps {
-        //         sh 'terraform plan -no-color'
-        //     }
-        // }
+        stage('Plan') {
+            steps {
+                sh 'terraform plan -no-color'
+            }
+        }
         // stage('Validate Apply') {
         //     input {
         //         message "Do you want to Apply this plan?"
