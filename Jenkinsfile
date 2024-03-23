@@ -21,10 +21,7 @@ pipeline {
         stage('Ansible') {
             steps {
                 sh "printf '\n3.27.156.237' >> ./terraform/aws_hosts"
-                sh '. /ansible-core-env/bin/activate && \
-                    export ANSIBLE_CONFIG=./ansible/ansible.cfg && \
-                    ansible-playbook --key-file /certs/client/id_rsa --user ubuntu ./ansible/main.yaml'
-                // ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
             }
         }
         // stage('Validate Apply') {
