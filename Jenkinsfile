@@ -6,7 +6,7 @@ pipeline {
         AWS_SHARED_CREDENTIALS_FILE = credentials('xiangli-admin')
         
     }
-    // stages {
+    stages {
     //     stage('TF Init') {
     //         steps {
     //             sh 'ls'
