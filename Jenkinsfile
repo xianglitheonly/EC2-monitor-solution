@@ -20,6 +20,15 @@ pipeline {
                 sh 'cd terraform && terraform plan -no-color'
             }
         }
+        stage('Checking Plan') {
+            input {
+                message "Is your plan OK?"
+                ok "Yes"
+            }
+            steps {
+                echo 'Plan is OK! Starting Ansible deployment!'
+            }
+        }
         stage('TF Apply') {
             steps {
                 sh 'cd terraform && terraform apply -auto-approve -no-color'
@@ -30,15 +39,7 @@ pipeline {
                  sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
             }
         }
-        stage('Checking EC2') {
-            input {
-                message "Are your instances running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'EC2 are running well, starting Ansible deployment.'
-            }
-        }
+
         stage('Ansible Deploy') {
             steps {
                 // sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
