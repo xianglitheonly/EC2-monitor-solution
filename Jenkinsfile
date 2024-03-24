@@ -42,7 +42,8 @@ pipeline {
                 sh "echo '\n54.252.178.236' >> ./terraform/aws_hosts"
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
                                 inventory: './terraform/aws_hosts',
-                                playbook: './ansible/main.yaml')
+                                playbook: './ansible/main.yaml',
+                                extras: "-e ansible_ssh_common_args='-o StrictHostKeyChecking=no'")
             }
         }
         stage('Checking Applications') {
