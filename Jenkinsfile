@@ -7,12 +7,13 @@ pipeline {
         
     }
     stages {
-        // stage('TF Init') {
-        //     steps {
-        //         sh 'ls'
-        //         sh 'cd terraform && terraform init -no-color'
-        //     }
-        // }
+        stage('TF Init') {
+            steps {
+                sh 'ls'
+                sh 'aws s3 ls'
+                sh 'cd terraform && terraform init -no-color'
+            }
+        }
         // stage('TF Plan') {
         //     steps {
         //         sh 'cd terraform && terraform plan -no-color'
