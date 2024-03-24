@@ -11,7 +11,7 @@ pipeline {
         stage('TF Init') {
             steps {
                 sh 'ls'
-                sh 'aws s3 ls'
+                sh 'cat ./terraform$BRANCH_NAME.tfvars'
                 sh 'cd terraform && terraform init -no-color'
             }
         }
@@ -73,15 +73,15 @@ pipeline {
             }
         }
     }
-    post {
-        success {
-            echo 'Success!'
-        }
-        failure {
-            sh 'terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-        }
-        aborted {
-            sh 'terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-        }
-    }
+    // post {
+    //     success {
+    //         echo 'Success!'
+    //     }
+    //     failure {
+    //         sh 'terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+    //     }
+    //     aborted {
+    //         sh 'terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+    //     }
+    // }
 }
