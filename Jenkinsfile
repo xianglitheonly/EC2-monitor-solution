@@ -57,6 +57,13 @@ pipeline {
             steps {
                 echo 'Applications are running well, starting TF destroy.'
             }
+            input {
+                message "Are you sure to destroy all?"
+                ok "Yes"
+            }
+            steps {
+                echo 'Destroy starting.'
+            }
         }
         stage('Destroy') {
             steps {
