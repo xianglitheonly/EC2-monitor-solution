@@ -40,7 +40,7 @@ pipeline {
         stage('Ansible Deploy') {
             steps {
                 sh "echo '\n54.252.178.236' >> ./terraform/aws_hosts"
-                ansiblePlaybook(credentialsId: 'ec2-ssh-key-2', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
             }
         }
         stage('Checking Applications') {
