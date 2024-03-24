@@ -73,15 +73,15 @@ pipeline {
             }
         }
     }
-    // post {
-    //     success {
-    //         echo 'Success!'
-    //     }
-    //     failure {
-    //         sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-    //     }
-    //     aborted {
-    //         sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-    //     }
-    // }
+    post {
+        success {
+            echo 'Success!'
+        }
+        failure {
+            sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+        }
+        aborted {
+            sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+        }
+    }
 }
