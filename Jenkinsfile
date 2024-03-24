@@ -4,7 +4,7 @@ pipeline {
         TF_IN_AUTOMATION = 'true'
         TF_CLI_CONFIG_FILE = credentials('tf-creds')
         AWS_SHARED_CREDENTIALS_FILE = credentials('xiangli-admin')
-        ANSIBLE_HOST_KEY_CHECKING = 'False'
+        ANSIBLE_HOST_KEY_CHECKING = 'false'
         
     }
     stages {
