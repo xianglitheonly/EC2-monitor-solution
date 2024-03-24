@@ -38,24 +38,24 @@ pipeline {
         //         echo 'EC2 are running well, starting Ansible deployment.'
         //     }
         // }
-        stage('Ansible Deploy') {
-            steps {
-                sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
-                ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
-                                inventory: './terraform/aws_hosts',
-                                playbook: './ansible/main.yaml'
-                                )
-            }
-        }
-        stage('Checking Applications') {
-            input {
-                message "Are your applications running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'Applications are running well, starting TF destroy.'
-            }
-        }
+        // stage('Ansible Deploy') {
+        //     steps {
+        //         sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
+        //         ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
+        //                         inventory: './terraform/aws_hosts',
+        //                         playbook: './ansible/main.yaml'
+        //                         )
+        //     }
+        // }
+        // stage('Checking Applications') {
+        //     input {
+        //         message "Are your applications running well?"
+        //         ok "Yes"
+        //     }
+        //     steps {
+        //         echo 'Applications are running well, starting TF destroy.'
+        //     }
+        // }
         stage('Destroy') {
             steps {
                 sh 'cd terraform && terraform destroy -auto-approve -no-color'
