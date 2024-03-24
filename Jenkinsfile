@@ -17,10 +17,14 @@ pipeline {
         }
         stage('TF Plan') {
             steps {
-                sh 'cd terraform && terraform plan -no-color -var-file="$BRANCH_NAME.tfvars'
+                sh 'cd terraform && terraform plan -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
         }
         stage('Checking Plan') {
+            when {
+                beforeInput true
+                branch "dev"
+            }
             input {
                 message "Is your plan OK?"
                 ok "Yes"
@@ -31,7 +35,7 @@ pipeline {
         }
         stage('TF Apply') {
             steps {
-                sh 'cd terraform && terraform apply -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars'
+                sh 'cd terraform && terraform apply -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
         }
         stage('EC2 Wait') {
@@ -59,6 +63,10 @@ pipeline {
             }
         }
         stage('Confirm Destroy'){
+            when {
+                beforeInput true
+                branch "dev"
+            }
             input {
                 message "Are you sure to destroy all?"
                 ok "Yes"
@@ -69,19 +77,19 @@ pipeline {
         }
         stage('Destroy') {
             steps {
-                sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars'
+                sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
         }
     }
-    // post {
-    //     success {
-    //         echo 'Success!'
-    //     }
-    //     failure {
-    //         sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-    //     }
-    //     aborted {
-    //         sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
-    //     }
-    // }
+    post {
+        success {
+            echo 'Success!'
+        }
+        failure {
+            sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+        }
+        aborted {
+            sh 'cd terraform && terraform destroy -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
+        }
+    }
 }
