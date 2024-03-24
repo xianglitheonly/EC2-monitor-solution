@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Ansible Deploy') {
             steps {
-                sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
+                // sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
                                 inventory: './terraform/aws_hosts',
                                 playbook: './ansible/main.yaml'
