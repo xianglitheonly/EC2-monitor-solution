@@ -43,7 +43,7 @@ pipeline {
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
                                 inventory: './terraform/aws_hosts',
                                 playbook: './ansible/main.yaml',
-                                extras: '-e ansible_ssh_common_args="-o StrictHostKeyChecking=no"')
+                                extras: "-e ansible_ssh_common_args='-o StrictHostKeyChecking=no'")
             }
         }
         stage('Checking Applications') {
