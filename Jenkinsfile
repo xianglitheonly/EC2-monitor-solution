@@ -7,23 +7,32 @@ pipeline {
         
     }
     stages {
-        stage('Init') {
+        stage('TF Init') {
             steps {
                 sh 'ls'
                 sh 'cd terraform && terraform init -no-color'
             }
         }
-        stage('Plan') {
+        stage('TF Plan') {
             steps {
                 sh 'cd terraform && terraform plan -no-color'
             }
         }
-        stage('Ansible') {
+        stage('TF Apply') {
             steps {
-                sh "printf '\n3.27.156.237' >> ./terraform/aws_hosts"
-                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+                sh 'cd terraform && terraform apply -auto-approve -no-color'
             }
         }
+        stage('EC2 Wait') {
+            steps {
+                 sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
+            }
+        }
+        // stage('Ansible Deploy') {
+        //     steps {
+        //         ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+        //     }
+        // }
         // stage('Validate Apply') {
         //     input {
         //         message "Do you want to Apply this plan?"
@@ -38,11 +47,7 @@ pipeline {
         //         sh 'terraform apply -auto-approve -no-color'
         //     }
         // }
-        // stage('EC2 Wait') {
-        //     steps {
-        //          sh 'aws ec2 wait instance-status-ok --region us-west-1'
-        //     }
-        // }
+
         // stage('Ansible') {
         //     steps {
         //         ansiblePlaybook(credentialsId: 'mtckey', inventory: 'aws_hosts', playbook: 'playbooks/main-playbook.yml')
