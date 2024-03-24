@@ -7,39 +7,39 @@ pipeline {
         
     }
     stages {
-        stage('TF Init') {
-            steps {
-                sh 'ls'
-                sh 'cd terraform && terraform init -no-color'
-            }
-        }
-        stage('TF Plan') {
-            steps {
-                sh 'cd terraform && terraform plan -no-color'
-            }
-        }
-        stage('TF Apply') {
-            steps {
-                sh 'cd terraform && terraform apply -auto-approve -no-color'
-            }
-        }
-        stage('EC2 Wait') {
-            steps {
-                 sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
-            }
-        }
-        stage('Checking EC2') {
-            input {
-                message "Are your instances running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'EC2 are running well, starting Ansible deployment.'
-            }
-        }
+        // stage('TF Init') {
+        //     steps {
+        //         sh 'ls'
+        //         sh 'cd terraform && terraform init -no-color'
+        //     }
+        // }
+        // stage('TF Plan') {
+        //     steps {
+        //         sh 'cd terraform && terraform plan -no-color'
+        //     }
+        // }
+        // stage('TF Apply') {
+        //     steps {
+        //         sh 'cd terraform && terraform apply -auto-approve -no-color'
+        //     }
+        // }
+        // stage('EC2 Wait') {
+        //     steps {
+        //          sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
+        //     }
+        // }
+        // stage('Checking EC2') {
+        //     input {
+        //         message "Are your instances running well?"
+        //         ok "Yes"
+        //     }
+        //     steps {
+        //         echo 'EC2 are running well, starting Ansible deployment.'
+        //     }
+        // }
         stage('Ansible Deploy') {
             steps {
-                // sh "echo '\n54.252.178.236' >> ./terraform/aws_hosts"
+                sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', 
                                 inventory: './terraform/aws_hosts',
                                 playbook: './ansible/main.yaml')
