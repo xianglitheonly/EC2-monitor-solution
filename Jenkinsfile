@@ -28,20 +28,35 @@ pipeline {
                  sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
             }
         }
-        // stage('Ansible Deploy') {
-        //     steps {
-        //         ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
-        //     }
-        // }
-        // stage('Validate Apply') {
-        //     input {
-        //         message "Do you want to Apply this plan?"
-        //         ok "Apply"
-        //     }
-        //     steps {
-        //         echo 'Apply Accepted'
-        //     }
-        // }
+        stage('Checking EC2') {
+            input {
+                message "Are your instances running well?"
+                ok "Yes"
+            }
+            steps {
+                echo 'EC2 are running well, starting Ansible deployment.'
+            }
+        }
+        stage('Ansible Deploy') {
+            steps {
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
+            }
+        }
+        stage('Checking Applications') {
+            input {
+                message "Are your applications running well?"
+                ok "Yes"
+            }
+            steps {
+                echo 'Applications are running well, starting TF destroy.'
+            }
+        }
+        stage('Destroy') {
+            steps {
+                sh 'terraform destroy -auto-approve -no-color'
+            }
+        }
+
         // stage('Apply') {
         //     steps {
         //         sh 'terraform apply -auto-approve -no-color'
@@ -53,10 +68,6 @@ pipeline {
         //         ansiblePlaybook(credentialsId: 'mtckey', inventory: 'aws_hosts', playbook: 'playbooks/main-playbook.yml')
         //     }
         // }
-        // stage('Destroy') {
-        //     steps {
-        //         sh 'terraform destroy -auto-approve -no-color'
-        //     }
-        // }
+
     }
 }
