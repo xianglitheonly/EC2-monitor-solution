@@ -1,0 +1,18 @@
+vpc_cidr = "10.123.0.0/16"
+
+my_ip = "49.193.207.35/32"
+
+main_instance_type = "t2.micro"
+
+main_vol_size = 8
+
+main_instance_count = 1
+
+key_name = "mtc_key"
+
+public_key_path = "/certs/client/id_rsa.pub"
+###
+
+# public_cidrs = ["10.124.1.0/24", "10.124.3.0/24"]
+
+# private_cidrs = ["10.124.2.0/24", "10.124.4.0/24"]
