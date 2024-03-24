@@ -6,37 +6,37 @@ pipeline {
         AWS_SHARED_CREDENTIALS_FILE = credentials('xiangli-admin')
         
     }
-    stages {
-        stage('TF Init') {
-            steps {
-                sh 'ls'
-                sh 'cd terraform && terraform init -no-color'
-            }
-        }
-        stage('TF Plan') {
-            steps {
-                sh 'cd terraform && terraform plan -no-color'
-            }
-        }
-        stage('TF Apply') {
-            steps {
-                sh 'cd terraform && terraform apply -auto-approve -no-color'
-            }
-        }
-        stage('EC2 Wait') {
-            steps {
-                 sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
-            }
-        }
-        stage('Checking EC2') {
-            input {
-                message "Are your instances running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'EC2 are running well, starting Ansible deployment.'
-            }
-        }
+    // stages {
+    //     stage('TF Init') {
+    //         steps {
+    //             sh 'ls'
+    //             sh 'cd terraform && terraform init -no-color'
+    //         }
+    //     }
+    //     stage('TF Plan') {
+    //         steps {
+    //             sh 'cd terraform && terraform plan -no-color'
+    //         }
+    //     }
+    //     stage('TF Apply') {
+    //         steps {
+    //             sh 'cd terraform && terraform apply -auto-approve -no-color'
+    //         }
+    //     }
+    //     stage('EC2 Wait') {
+    //         steps {
+    //              sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
+    //         }
+    //     }
+    //     stage('Checking EC2') {
+    //         input {
+    //             message "Are your instances running well?"
+    //             ok "Yes"
+    //         }
+    //         steps {
+    //             echo 'EC2 are running well, starting Ansible deployment.'
+    //         }
+    //     }
         stage('Ansible Deploy') {
             steps {
                 ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: './terraform/aws_hosts', playbook: './ansible/main.yaml')
