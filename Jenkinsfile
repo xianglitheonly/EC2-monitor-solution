@@ -37,6 +37,7 @@ pipeline {
             steps {
                 sh 'cd terraform && terraform apply -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
+        }
         stage('Inventory') {
           steps {
                 sh '''printf \\
@@ -51,6 +52,7 @@ pipeline {
                       --region us-west-1'''
             }
         }
+
         stage('Ansible Deploy') {
             steps {
                 // sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
