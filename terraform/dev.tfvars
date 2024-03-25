@@ -6,7 +6,7 @@ main_instance_type = "t2.micro"
 
 main_vol_size = 8
 
-main_instance_count = 1
+main_instance_count = 2
 
 key_name = "mtc_key"
 
