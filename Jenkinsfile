@@ -38,9 +38,18 @@ pipeline {
                 sh 'cd terraform && terraform apply -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
         }
+        stage('Inventory') {
+          steps {
+                sh '''cd terraform && printf \\
+                    "\\n$(terraform output -json instance_ips | jq -r \'.[]\')" \\
+                    >> aws_hosts'''
+            }
+        }
         stage('EC2 Wait') {
             steps {
-                 sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
+                sh '''cd terraform && aws ec2 wait instance-status-ok \\
+                      --instance-ids $(terraform output -json instance_ids | jq -r \'.[]\') \\
+                      --region ap-southeast-2'''
             }
         }
 
@@ -53,20 +62,15 @@ pipeline {
                                 )
             }
         }
-        stage('Checking Applications') {
-            input {
-                message "Are your applications running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'Applications are running well, starting TF destroy.'
+        stage('Test Grafana and Prometheus') {
+          steps {
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key',
+                                inventory: 'aws_hosts',
+                                playbook: './ansible/node-test.yaml'
+                                ) 
             }
         }
         stage('Confirm Destroy'){
-            when {
-                beforeInput true
-                branch "dev"
-            }
             input {
                 message "Are you sure to destroy all?"
                 ok "Yes"

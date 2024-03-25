@@ -1,6 +1,6 @@
 vpc_cidr = "10.124.0.0/16"
 
-my_ip = "49.193.207.35/32"
+my_ip = ""
 
 main_instance_type = "t2.micro"
 
