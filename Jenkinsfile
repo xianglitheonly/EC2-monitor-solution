@@ -37,13 +37,20 @@ pipeline {
             steps {
                 sh 'cd terraform && terraform apply -auto-approve -no-color -var-file="$BRANCH_NAME.tfvars"'
             }
+        stage('Inventory') {
+          steps {
+                sh '''printf \\
+                    "\\n$(terraform output -json instance_ips | jq -r \'.[]\')" \\
+                    >> aws_hosts'''
+            }
         }
         stage('EC2 Wait') {
             steps {
-                 sh 'aws ec2 wait instance-status-ok --region ap-southeast-2'
+                sh '''aws ec2 wait instance-status-ok \\
+                      --instance-ids $(terraform output -json instance_ids | jq -r \'.[]\') \\
+                      --region us-west-1'''
             }
         }
-
         stage('Ansible Deploy') {
             steps {
                 // sh "echo '\n54.253.71.228' >> ./terraform/aws_hosts"
