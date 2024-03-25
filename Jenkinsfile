@@ -40,14 +40,14 @@ pipeline {
         }
         stage('Inventory') {
           steps {
-                sh '''printf \\
+                sh '''cd terraform && printf \\
                     "\\n$(terraform output -json instance_ips | jq -r \'.[]\')" \\
                     >> aws_hosts'''
             }
         }
         stage('EC2 Wait') {
             steps {
-                sh '''aws ec2 wait instance-status-ok \\
+                sh '''cd terraform && aws ec2 wait instance-status-ok \\
                       --instance-ids $(terraform output -json instance_ids | jq -r \'.[]\') \\
                       --region us-west-1'''
             }
