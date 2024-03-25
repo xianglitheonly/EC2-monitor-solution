@@ -4,8 +4,8 @@ Deploy Grafana and Prometheus to AWS EC2 instances automatically with Terraform,
 
 ## Dockerfile
 
-The Dockerfile is used to build a customized Jenkins container that will be installed the required
-enviroments inluding AWS CLI, Terraform, Ansible and JQ.
+The Dockerfile is used to build a customized Jenkins docker image that will be installed with the required
+environments inluding AWS CLI, Terraform, Ansible and JQ.
 
 ### Installing
 
