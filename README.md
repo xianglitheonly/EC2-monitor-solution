@@ -1,10 +1,6 @@
-# Project Title
+## Project Description
 
-Simple overview of use/purpose.
-
-## Description
-
-An in-depth paragraph about your project and overview of use.
+Deploy Grafana and Prometheus to AWS EC2 instances automatically with Terraform, Ansible and Jenkins.
 
 ## Getting Started
 
