@@ -53,13 +53,9 @@ pipeline {
                                 )
             }
         }
-        stage('Checking Applications') {
-            input {
-                message "Are your applications running well?"
-                ok "Yes"
-            }
-            steps {
-                echo 'Applications are running well, starting TF destroy.'
+        stage('Test Grafana and Prometheus') {
+          steps {
+                ansiblePlaybook(credentialsId: 'ec2-ssh-key', inventory: 'aws_hosts', playbook: 'playbooks/node-test.yml') 
             }
         }
         stage('Confirm Destroy'){
