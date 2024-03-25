@@ -71,10 +71,6 @@ pipeline {
             }
         }
         stage('Confirm Destroy'){
-            when {
-                beforeInput true
-                branch "dev"
-            }
             input {
                 message "Are you sure to destroy all?"
                 ok "Yes"
