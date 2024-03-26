@@ -10,11 +10,14 @@ environments inluding AWS CLI, Terraform, Ansible and JQ.
 The basic image and running guide could be found at
 https://www.jenkins.io/doc/book/installing/docker/#on-macos-and-linux
 
+## Jenkins
+
+
 ## Terraform
 
-Terraform cloud is used for Terraform state backup. Resources that Terraform will create include AWS VPC,
-subnets, rout tables, internet gateway, security groups and EC2 instances. With several .tfvars files for
-different environments.
+* Terraform cloud is used for Terraform state backup.
+* Resources that Terraform will create include AWS VPC, subnets, rout tables, internet gateway, security groups and EC2 instances.
+* With several .tfvars files for different environments.
 
 ## Ansible
 
