@@ -4,14 +4,17 @@ Deploy Grafana and Prometheus to AWS EC2 instances automatically with Terraform,
 
 ## Dockerfile
 
-The Dockerfile is used to build a customized Jenkins docker image that will be installed with the required
+* The Dockerfile is used to build a customized Jenkins docker image that will be installed with the required
 environments inluding AWS CLI, Terraform, Ansible and JQ.
-
-The basic image and running guide could be found at
+* The basic image and running guide could be found at
 https://www.jenkins.io/doc/book/installing/docker/#on-macos-and-linux
 
 ## Jenkins
-
+* A multi-branch pipline is used to automatically run Terraform apply and Ansible deploy.
+* The public ssh key used to create the EC2 intances should be put in the docker volume called jenkins-docker-certs.
+* All the credentials are stored in Jenkins cretentails. There are tf-creds for Terraform cloud, github-cred for github
+personal access, xiangli-admin for AWS CLI access, ec2-ssh-key for the ssh private key.
+![alt text](image.png)
 
 ## Terraform
 
