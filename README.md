@@ -21,7 +21,7 @@ different environments.
 Two Ansible playbook files will be used. One for Grafana and Prometheus deployment and one for applications test
 for ensuring the deployment is successful. There is no ansible.cfg file for configuration because it will be using
 a build-in function in Jenkins ansiblePlaybook() to specify the inventory file. The other configurations could be
-specified using environment valuables at the top of the Jenkinsfile.
+specified using Ansible environment valuables at the top of the Jenkinsfile.
 
 ## Help
 
