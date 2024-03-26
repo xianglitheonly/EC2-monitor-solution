@@ -18,7 +18,7 @@ personal access, xiangli-admin for AWS CLI access, ec2-ssh-key for the ssh priva
 
 ## Terraform
 
-* Terraform cloud is used for Terraform state backup.
+* Terraform cloud is used for Terraform state backend.
 * Resources that Terraform will create include AWS VPC, subnets, rout tables, internet gateway, security groups and EC2 instances.
 * With several .tfvars files for different environments.
 
